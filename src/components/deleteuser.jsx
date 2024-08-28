@@ -39,7 +39,7 @@ const DeleteUser = () => {
 
   return (
     <div>
-      <h1>Delete User</h1>
+      <h1>!!DELETE USER!!</h1>
       <form onSubmit={submitHandler}>
         <label>User Id</label><br />
         <input type='text' name='userid' onChange={(event) => setUserid(event.target.value)} /><br /><br />
