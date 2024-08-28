@@ -1,4 +1,5 @@
 import { useState} from 'react';
+import writecookie from '../utils/writecookie';
 
 
 const Login = () => {
@@ -10,7 +11,7 @@ const Login = () => {
     event.preventDefault();
     console.log(userid,email, password);
     const response = await fetch(
-      "http://localhost:5001/users/login",
+      "http://localhost:5002/users/login",
       {
         method: "POST",
         headers: {
@@ -25,6 +26,7 @@ const Login = () => {
     const output = await response.json();
     console.log(response);
     console.log(output.token);
+    writecookie("jwt_token",output.token,14)
   }
 
     return(

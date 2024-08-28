@@ -10,7 +10,7 @@ const Register = () => {
     event.preventDefault();
     console.log(userid,email, password);
     const response = await fetch(
-      "http://localhost:5001/users/register",
+      "http://localhost:5002/users/register",
       {
         method: "POST",
         headers: {
