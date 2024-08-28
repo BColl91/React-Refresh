@@ -2,7 +2,6 @@ import { useState } from 'react';
 import readcookie from '../utils/readcookie';
 
 const UpdateUser = () => {
-  const [userid, setUserid] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -20,7 +19,6 @@ const UpdateUser = () => {
           "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-          username: userid,
           email: email,
           password: password
         })
@@ -41,8 +39,6 @@ const UpdateUser = () => {
     <div>
       <h1>Update User</h1>
       <form onSubmit={submitHandler}>
-        <label>User Id</label><br />
-        <input type='text' name='userid' onChange={(event) => setUserid(event.target.value)} /><br /><br />
         <label>Email</label><br />
         <input type='text' name='email' onChange={(event) => setEmail(event.target.value)} /><br /><br />
         <label>Password</label><br />
