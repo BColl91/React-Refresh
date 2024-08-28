@@ -3,7 +3,6 @@ import readcookie from '../utils/readcookie';
 
 const DeleteUser = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   //SUBMITHANDLER
@@ -20,7 +19,6 @@ const DeleteUser = () => {
         },
         body: JSON.stringify({
           email: email,
-          password: password
         })
       });
 
@@ -37,12 +35,11 @@ const DeleteUser = () => {
 
   return (
     <div>
-      <h1>!!DELETE USER!!</h1>
+      <h1 className="delUser">DELETE USER</h1>
       <form onSubmit={submitHandler}>
         <label>Email</label><br />
         <input type='text' name='email' onChange={(event) => setEmail(event.target.value)} /><br /><br />
-        <label>Password</label><br />
-        <input type='text' name='password' onChange={(event) => setPassword(event.target.value)} /><br /><br />
+
         <input type='submit' value="Submit" />
       </form>
       <p>{message}</p>

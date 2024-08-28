@@ -31,7 +31,7 @@ const Login = () => {
 
     return(
     <div>
-    <h1>Login User</h1>
+    <h1>Login</h1>
     <form onSubmit={submitHandler}>
       {/* <label>User Id</label><br></br> */}
       {/* <input type='text'name='userid' onChange={(event) =>{setUserid(event.target.value)} }/><br></br><br></br> */}

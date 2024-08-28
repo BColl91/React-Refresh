@@ -15,7 +15,7 @@ const ListUsers = () => {
     
     let reply = "Bearer "+token;
     const response = await fetch(
-      "http://localhost:5002/users/listUser",
+      "http://localhost:5002/users/listUsers",
       {
         method: "GET",
         headers: {
@@ -25,7 +25,7 @@ const ListUsers = () => {
       }
     );
     const output = await response.json();
-    console.log(output.userlist);
+    console.log(output);
     setUserList(output.userlist);
     setListOn(true);
     }

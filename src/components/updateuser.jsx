@@ -3,14 +3,15 @@ import readcookie from '../utils/readcookie';
 
 const UpdateUser = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
 
   //SUBMITHANDLER
   const submitHandler = async (event) => {
     event.preventDefault();
     const token = readcookie("jwt_token");
-    
+
     try {
       const response = await fetch("http://localhost:5002/users/updateUser", {
         method: "PUT",
@@ -20,7 +21,8 @@ const UpdateUser = () => {
         },
         body: JSON.stringify({
           email: email,
-          password: password
+          oldPassword: oldPassword,  // Include the old password
+          newPassword: newPassword   // Include the new password
         })
       });
 
@@ -41,8 +43,13 @@ const UpdateUser = () => {
       <form onSubmit={submitHandler}>
         <label>Email</label><br />
         <input type='text' name='email' onChange={(event) => setEmail(event.target.value)} /><br /><br />
-        <label>Password</label><br />
-        <input type='text' name='password' onChange={(event) => setPassword(event.target.value)} /><br /><br />
+        
+        <label>Old Password</label><br />
+        <input type='password' name='oldPassword' onChange={(event) => setOldPassword(event.target.value)} /><br /><br />
+        
+        <label>New Password</label><br />
+        <input type='password' name='newPassword' onChange={(event) => setNewPassword(event.target.value)} /><br /><br />
+
         <input type='submit' value="Submit" />
       </form>
       <p>{message}</p>
