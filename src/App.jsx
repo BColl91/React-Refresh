@@ -23,7 +23,7 @@ function App() {
       <Register/>
       <Login />
       <ListUsers />
-      <h1>List</h1>
+      <h1>List Images</h1>
       <button onClick={(event) => {setToggle(!toggle);console.log(toggle)}}>Press me</button>
       <br></br>
       {imageArray.map( (item, index) => { 
