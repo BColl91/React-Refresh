@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Register from './components/registerUser';
 import Login from './components/login';
 import ListUsers from './components/listUsers';
+import UpdateUser from './components/updateuser';
+import DeleteUser from './components/deleteuser';
 
 function App() {
   // Normal JavaScript goes here
@@ -21,8 +23,10 @@ function App() {
   return (
     <div className="App">
       <Register/>
-      <Login />
-      <ListUsers />
+      <Login/>
+      <ListUsers/>
+      <UpdateUser/>
+      <DeleteUser/>
       <h1>List Images</h1>
       <button onClick={(event) => {setToggle(!toggle);console.log(toggle)}}>Press me</button>
       <br></br>
