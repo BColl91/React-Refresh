@@ -1,57 +1,57 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import readcookie from '../utils/readcookie';
 
 const ListUsers = () => {
-    const [userList,setUserList]= useState([])
-    const [listOn,setListOn] = useState(false)
-    //CLICKHANDLER
+  const [userList, setUserList] = useState([]);
+  const [listOn, setListOn] = useState(false);
+  const [error, setError] = useState(null);
 
-    const clickHandler2 = async (event) => {
-        setListOn(false);
+  const clickHandler = async () => {
+    const token = readcookie("jwt_token");
+    if (!token) {
+      setError("You must be logged in to view this page.");
+      setListOn(false);
+      return;
     }
-  const clickHandler = async (event) => {
-    let token = readcookie("jwt_token");
-    console.log(token);
-    
-    let reply = "Bearer "+token;
-    const response = await fetch(
-      "http://localhost:5002/users/listUsers",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": reply
-        }
+
+    const response = await fetch("http://localhost:5002/users/listUsers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       }
-    );
+    });
     const output = await response.json();
-    console.log(output);
-    setUserList(output.userlist);
-    setListOn(true);
+    if (response.ok) {
+      setUserList(output.userlist);
+      setListOn(true);
+      setError(null);
+    } else {
+      setError(output.message || "Failed to fetch user list.");
+      setListOn(false);
     }
+  };
 
-    return(
+  return (
     <div>
-    <hr></hr>
-    <h1>List Users</h1>
-    <button onClick={clickHandler}>List Users</button>
-    <button onClick={clickHandler2}>Switch off List</button>
-    <hr></hr>
-    <div>
-        <h1>List of Users</h1>
-        {userList.map((item, index) => {
-            return(
-            <>
-            {listOn && <>
+      <h1>List Users</h1>
+      <button onClick={clickHandler}>List Users</button>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <hr />
+      {listOn ? (
+        userList.map((item, index) => (
+          <div key={index}>
             <h2>User ID = {item.username}</h2>
             <h2>Email = {item.email}</h2>
-            </>
-        }
-            </>)
-        })}
+          </div>
+        ))
+      ) : (
+        <h1>Please login again to proceed</h1>
+      )}
+      <hr />
     </div>
-    <hr></hr>
-  </div>
-)}
+  );
+};
 
 export default ListUsers;

@@ -1,47 +1,55 @@
 import { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
-    const [userid,setUserid] = useState("");
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("")
-    //SUBMITHANDLER
+  const [userid, setUserid] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log(userid,email, password);
+    if (!userid || !email || !password) {
+      setError("All fields are required.");
+      return;
+    }
+
     const response = await fetch(
       "http://localhost:5002/users/register",
       {
         method: "POST",
         headers: {
-          "Content-Type":"application/json"
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          username: userid,
-          email:email,
-          password: password
-        })
+        body: JSON.stringify({ username: userid, email: email, password: password })
       }
     );
     const output = await response.json();
-    console.log(response);
-    console.log(output);
-  }
+    if (response.ok) {
+      setError(null);
+    } else {
+      setError(output.message || "Registration failed.");
+    }
+  };
 
-    return(
+  return (
     <div>
-    <h1>Sign-In</h1>
-    <form onSubmit={submitHandler}>
-      <label>User Id</label><br></br>
-      <input type='text'name='userid' onChange={(event) =>{setUserid(event.target.value)} }/><br></br><br></br>
-      <label>Email</label><br></br>
-      <input type='text'name='email' onChange={(event) =>{setEmail(event.target.value)}}/><br></br><br></br>
-      <label>Password</label><br></br>
-      <input type='text'name='password' onChange={(event) =>{setPassword(event.target.value)}}/><br></br><br></br>
-      <input type='submit' value="Submit"></input>
-    </form>
-    <hr></hr>
-  </div>
-)}
+      <h1>Sign-In</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <form onSubmit={submitHandler}>
+        <label>User Id</label><br />
+        <input type='text' name='userid' onChange={(event) => setUserid(event.target.value)} /><br /><br />
+        <label>Email</label><br />
+        <input type='text' name='email' onChange={(event) => setEmail(event.target.value)} /><br /><br />
+        <label>Password</label><br />
+        <input type='password' name='password' onChange={(event) => setPassword(event.target.value)} /><br /><br />
+        <input type='submit' value="Submit" />
+      </form>
+      <hr />
+    </div>
+  );
+}
+
 
 export default Register

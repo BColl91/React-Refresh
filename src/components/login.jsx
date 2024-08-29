@@ -1,48 +1,44 @@
-import { useState} from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import writecookie from '../utils/writecookie';
 
-
 const Login = () => {
-    const [userid,setUserid] = useState("");
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("")
-    //SUBMITHANDLER
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log(userid,email, password);
-    const response = await fetch(
-      "http://localhost:5002/users/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-          email:email,
-          password: password
-        })
-      }
-    );
+    const response = await fetch("http://localhost:5002/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    });
     const output = await response.json();
-    console.log(response);
-    console.log(output.token);
-    writecookie("jwt_token",output.token,14)
-  }
+    if (output.token) {
+      writecookie("jwt_token", output.token, 14);
+      navigate('/list-users'); // Redirect after successful login
+    }
+  };
 
-    return(
+  return (
     <div>
-    <h1>Login</h1>
-    <form onSubmit={submitHandler}>
-      {/* <label>User Id</label><br></br> */}
-      {/* <input type='text'name='userid' onChange={(event) =>{setUserid(event.target.value)} }/><br></br><br></br> */}
-      <label>Email</label><br></br>
-      <input type='text'name='email' onChange={(event) =>{setEmail(event.target.value)}}/><br></br><br></br>
-      <label>Password</label><br></br>
-      <input type='text'name='password' onChange={(event) =>{setPassword(event.target.value)}}/><br></br><br></br>
-      <input type='submit' value="Submit"></input>
-    </form>
-    <hr></hr>
-  </div>
-)}
+      <h1>Login</h1>
+      <form onSubmit={submitHandler}>
+        <label>Email</label><br />
+        <input type='text' name='email' onChange={(event) => setEmail(event.target.value)} /><br /><br />
+        <label>Password</label><br />
+        <input type='password' name='password' onChange={(event) => setPassword(event.target.value)} /><br /><br />
+        <input type='submit' value="Submit" />
+      </form>
+      <hr />
+    </div>
+  );
+}
 
-export default Login
+export default Login;

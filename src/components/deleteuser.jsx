@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import readcookie from '../utils/readcookie';
 
 const DeleteUser = () => {
