@@ -24,6 +24,8 @@ const DeleteUser = () => {
       });
 
       const output = await response.json();
+      console.log(output.message);
+      
       if (response.ok) {
         setMessage("User deleted successfully!");
       } else {

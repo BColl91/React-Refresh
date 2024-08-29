@@ -47,7 +47,7 @@ const ListUsers = () => {
           </div>
         ))
       ) : (
-        <h1>Please login again to proceed</h1>
+        <h1>Please login to proceed</h1>
       )}
       <hr />
     </div>
