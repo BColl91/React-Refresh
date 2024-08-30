@@ -12,7 +12,7 @@ const DeleteUser = () => {
     const token = readcookie("jwt_token");
     
     try {
-      const response = await fetch("http://localhost:5002/users/deleteUser", {
+      const response = await fetch("https://login-production-a610.up.railway.app/users/deleteUser", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

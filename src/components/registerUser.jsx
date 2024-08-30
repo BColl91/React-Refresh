@@ -16,7 +16,7 @@ const Register = () => {
     }
 
     const response = await fetch(
-      "http://localhost:5002/users/register",
+      "https://login-production-a610.up.railway.app/users/register",
       {
         method: "POST",
         headers: {
@@ -27,6 +27,8 @@ const Register = () => {
     );
     const output = await response.json();
     if (response.ok) {
+      console.log("SUCCESS");
+      
       setError(null);
     } else {
       setError(output.message || "Registration failed.");
